@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "745523182107",
+    "project_id": "lithe-vector-280100",
+    "storage_bucket": "lithe-vector-280100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745523182107:android:b76bfdcd5d8ab9696556be",
+        "android_client_info": {
+          "package_name": "com.example.mood_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnuIPRdwkAQY8I_r67kZAp2JZpi7-MRPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

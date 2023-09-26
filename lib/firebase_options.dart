@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCoQi6S7N0e_XAyS5ol3na8Y9OLrWZ0b18',
-    appId: '1:884938851721:android:898ae34181a6b57ed00d58',
-    messagingSenderId: '884938851721',
-    projectId: 'flutter-boiler-plate-efa2e',
-    storageBucket: 'flutter-boiler-plate-efa2e.appspot.com',
+    apiKey: 'AIzaSyBnuIPRdwkAQY8I_r67kZAp2JZpi7-MRPc',
+    appId: '1:745523182107:android:b76bfdcd5d8ab9696556be',
+    messagingSenderId: '745523182107',
+    projectId: 'lithe-vector-280100',
+    storageBucket: 'lithe-vector-280100.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCS2ABYFBxsoGgbopCFc8aCNlla8VjPZ-w',
-    appId: '1:884938851721:ios:ce7223b734249933d00d58',
-    messagingSenderId: '884938851721',
-    projectId: 'flutter-boiler-plate-efa2e',
-    storageBucket: 'flutter-boiler-plate-efa2e.appspot.com',
-    iosBundleId: 'com.example.boilerPlateFlutter',
+    apiKey: 'AIzaSyCFdhTAxpzw0ifVmQWYbaFDJaOeSsxkM-k',
+    appId: '1:745523182107:ios:a781bcd7017deeed6556be',
+    messagingSenderId: '745523182107',
+    projectId: 'lithe-vector-280100',
+    storageBucket: 'lithe-vector-280100.appspot.com',
+    iosBundleId: 'com.example.moodTracker',
   );
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../common/constants/gaps.dart';
 import '../common/constants/sizes.dart';
 import '../common/utils/util.dart';
 
@@ -22,6 +23,8 @@ class _TutorialScreenState extends State<TutorialScreen> {
     context.go('/home');
   }
 
+  final tutorialSecondImage = 'assets/images/tutorial_second.png';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +35,10 @@ class _TutorialScreenState extends State<TutorialScreen> {
               controller.page != null &&
               controller.page! >= 2.0;
           return Container(
-            color: isDarkMode(context) ? Colors.black : Colors.white,
+            width: MediaQuery.of(context).size.width * 0.7, // 화면 너비의 약 70%만큼 설정
+            color: isDarkMode(context)
+                ? Colors.black
+                : Theme.of(context).appBarTheme.backgroundColor,
             child: Padding(
               padding: const EdgeInsets.only(
                 top: Sizes.size32,
@@ -67,28 +73,51 @@ class _TutorialScreenState extends State<TutorialScreen> {
             Expanded(
               child: PageView(
                 controller: controller,
-                children: const <Widget>[
+                children: <Widget>[
                   // 첫 번째 페이지 내용...
-                  Center(
+                  const Center(
                     child: Text(
-                      "First Page",
-                      style: TextStyle(fontSize: 30),
+                      "Welcome",
+                      style: TextStyle(
+                        fontSize: Sizes.size40,
+                      ),
                     ),
                   ),
                   // 두 번째 페이지 내용...
                   Center(
-                    child: Text(
-                      "Second Page",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
+                      child: Column(
+                    children: [
+                      Gaps.v40,
+                      Image.asset(
+                        tutorialSecondImage,
+                        width: 400, // 원하는 너비로 설정
+                        height: 400, // 원하는 높이로 설정
+                      ),
+                      Gaps.v40,
+                      const Text(
+                        "Express how you feel today",
+                        style: TextStyle(
+                          fontSize: Sizes.size28,
+                        ),
+                      ),
+                    ],
+                  )),
                   // 세 번째 페이지 내용...
                   Center(
-                    child: Text(
-                      "Third Page",
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
+                      child: Column(
+                    children: const [
+                      Gaps.v40,
+                      Text(
+                        "Let's start the app",
+                        style: TextStyle(fontSize: 28),
+                      ),
+                      Gaps.v80,
+                      Text(
+                        "Please click the button below",
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ],
+                  )),
                 ],
               ),
             ),

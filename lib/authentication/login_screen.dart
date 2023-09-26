@@ -262,30 +262,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               GestureDetector(
                 onTap: () => _onMoveSignupScreen(context),
                 child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size10,
-                      horizontal: Sizes.size96,
-                    ),
-                    decoration: BoxDecoration(
-                      // BoxDecoration을 이용해 테두리를 만듭니다.
-                      border: Border.all(
-                        color: Colors.black,
-                      ), // 원하는 색상과 두께로 설정 가능합니다.
-                    ),
-                    child: Row(
-                      children: const [
-                        Text(
-                          'Create an account',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
+                  width: MediaQuery.of(context).size.width *
+                      0.7, // 화면 너비의 약 70%만큼 설정
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Sizes.size10,
+                    horizontal: Sizes.size1,
+                  ),
+                  decoration: BoxDecoration(
+                    // BoxDecoration을 이용해 테두리를 만듭니다.
+                    border: Border.all(
+                      color: Colors.black,
+                    ), // 원하는 색상과 두께로 설정 가능합니다.
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Create an account',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
                         ),
-                        FaIcon(
-                          FontAwesomeIcons.arrowRight,
-                          size: Sizes.size14,
-                        )
-                      ],
-                    )),
+                      ),
+                      FaIcon(
+                        FontAwesomeIcons.arrowRight,
+                        size: Sizes.size14,
+                      )
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

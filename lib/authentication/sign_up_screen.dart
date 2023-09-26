@@ -154,9 +154,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                     color: Colors.grey.shade400,
                                   ),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.grey.shade400,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -183,9 +183,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                   children: [
                                     GestureDetector(
                                       onTap: _onClearTap,
-                                      child: FaIcon(
+                                      child: const FaIcon(
                                         FontAwesomeIcons.solidCircleXmark,
-                                        color: Colors.grey.shade500,
+                                        color: Colors.black,
                                         size: Sizes.size20,
                                       ),
                                     ),
@@ -196,7 +196,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                         _obscureText
                                             ? FontAwesomeIcons.eye
                                             : FontAwesomeIcons.eyeSlash,
-                                        color: Colors.grey.shade500,
+                                        color: Colors.black,
                                         size: Sizes.size20,
                                       ),
                                     )
@@ -208,9 +208,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                     color: Colors.grey.shade400,
                                   ),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Colors.grey.shade400,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
@@ -282,9 +282,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               GestureDetector(
                 onTap: () => _onMoveLoginScreen(context),
                 child: Container(
+                    width: MediaQuery.of(context).size.width *
+                        0.7, // 화면 너비의 약 70%만큼 설정
                     padding: const EdgeInsets.symmetric(
                       vertical: Sizes.size10,
-                      horizontal: Sizes.size96,
+                      horizontal: Sizes.size16,
                     ),
                     decoration: BoxDecoration(
                       // BoxDecoration을 이용해 테두리를 만듭니다.
@@ -293,6 +295,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       ), // 원하는 색상과 두께로 설정 가능합니다.
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
                           'Log in',
