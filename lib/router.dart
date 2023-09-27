@@ -21,7 +21,7 @@ class Routes {
   static const String tutorialName = 'tutorial';
 
   ///mainnavigation
-  static const String mainNavigationURL = '/:tab(home|discover|inbox|profile)';
+  static const String mainNavigationURL = '/:tab(home|post)';
   static const String mainNavigationName = 'mainNavigation';
 }
 
