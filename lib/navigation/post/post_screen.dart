@@ -1,47 +1,88 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../common/constants/gaps.dart';
 import '../../common/constants/sizes.dart';
 import '../../common/widgets/form_button.dart';
+import 'post_view_model.dart';
 
-class PostScreen extends StatefulWidget {
+enum Mood { happy, sad, neutral }
+
+class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  ConsumerState<PostScreen> createState() => _PostScreenState();
 }
 
-class _PostScreenState extends State<PostScreen> {
-  final TextEditingController _contentsController =
+class _PostScreenState extends ConsumerState<PostScreen> {
+  final TextEditingController _contentController =
       TextEditingController(text: "");
+
+  Mood? _selectedMood;
 
   String _content = "";
 
-  void _onSave() {
-    print("123");
+  Widget _buildMoodIcon(Mood mood) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20), // border radius 추가
+        boxShadow: [
+          // 그림자 효과 추가
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+
+      margin: const EdgeInsets.all(10.0), // 각 컨테이너 사이에 여백 추가
+      child: IconButton(
+        icon: Icon(
+          mood == Mood.happy
+              ? Icons.sentiment_very_satisfied
+              : mood == Mood.sad
+                  ? Icons.sentiment_very_dissatisfied
+                  : Icons.sentiment_neutral,
+        ),
+        color: _selectedMood == mood ? Colors.red : Colors.grey,
+        onPressed: () {
+          setState(() {
+            _selectedMood = mood;
+          });
+        },
+      ),
+    );
   }
 
-  File? _image; //이미지를 담을 변수 선언
+  Future<void> _onSave(context) async {
+    ref.read(postForm.notifier).state = {
+      "content": _content,
+      "mood": _selectedMood,
+    };
+    await ref.read(postProvider.notifier).uploadPost(context);
+  }
 
   @override
   Future<void> dispose() async {
-    _contentsController.dispose();
+    _contentController.dispose();
     super.dispose();
   }
 
   bool isInputComplete() {
     // Check if all text controllers have non-empty text
-    return _contentsController.text.isNotEmpty;
+    return _contentController.text.isNotEmpty;
   }
 
   @override
   void initState() {
     super.initState();
-    _contentsController.addListener(() {
+    _contentController.addListener(() {
       setState(() {
-        _content = _contentsController.text;
+        _content = _contentController.text;
       });
     });
   }
@@ -89,7 +130,7 @@ class _PostScreenState extends State<PostScreen> {
                 ),
                 Gaps.v20,
                 TextField(
-                  controller: _contentsController,
+                  controller: _contentController,
                   maxLength: 300,
                   maxLines: 15,
                   autocorrect: false,
@@ -114,14 +155,15 @@ class _PostScreenState extends State<PostScreen> {
                   ),
                   cursorColor: Theme.of(context).primaryColor,
                 ),
-                _image == null
-                    ? const Text('')
-                    : Image.file(
-                        _image!,
-                        width: 200, // 이미지의 원하는 너비를 설정하세요.
-                        height: 150, // 이미지의 원하는 높이를 설정하세요.
-                        fit: BoxFit.cover,
-                      ),
+                Gaps.v20,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buildMoodIcon(Mood.happy),
+                    _buildMoodIcon(Mood.neutral),
+                    _buildMoodIcon(Mood.sad),
+                  ],
+                ),
               ],
             ),
           ),
@@ -136,7 +178,7 @@ class _PostScreenState extends State<PostScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => _onSave(),
+                  onTap: () => _onSave(context),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width *
                         0.7, // 화면 너비의 약 70%만큼 설정
