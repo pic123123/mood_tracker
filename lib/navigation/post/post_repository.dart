@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'post.model.dart';
+import 'post_model.dart';
 
 ///사용자가 작성한 글을 관리하는 기능을 제공합니다.
 class PostRepository {
@@ -9,8 +9,16 @@ class PostRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   ///Firebase 데이터베이스 내 "posts" 경로에 게시글을 업로드 합니다.
-  Future<void> uploadPost(Postmodel post, String uid) async {
-    await _db.collection("posts").doc(uid).set(post.toJson());
+  Future<void> uploadPost(PostModel post, String uid) async {
+    await _db.collection("posts").doc(uid).set(
+          post.toJson(),
+        );
+  }
+
+  ///Firebase 데이터베이스 내 "posts" 경로에 모든 게시글을 가져옵니다.
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllPosts() {
+    final query = _db.collection("posts");
+    return query.get();
   }
 }
 

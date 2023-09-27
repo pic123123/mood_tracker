@@ -1,38 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mood_tracker/navigation/post/post_model.dart';
+import 'package:mood_tracker/navigation/post/posts_view_model.dart';
 
-import '../../common/widgets/custom_snackbar.dart';
+import '../../common/constants/gaps.dart';
+import '../post/post_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<List<PostModel>> postsAsyncValue = ref.watch(postsProvider);
     return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          const Text("asd"),
-          ElevatedButton(
-            child: const Text('Show Success SnackBar'),
-            onPressed: () {
-              CustomSnackBar.show(
-                  context, SnackBarType.success, '회원가입에 성공하였습니다.');
-            },
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SafeArea(
+          child: postsAsyncValue.when(
+            data: (List<PostModel> posts) => ListView.builder(
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                final post = posts[index];
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Text('Mood :'),
+                            Icon(
+                              post.mood == Mood.happy
+                                  ? Icons.sentiment_very_satisfied
+                                  : post.mood == Mood.sad
+                                      ? Icons.sentiment_very_dissatisfied
+                                      : Icons.sentiment_neutral,
+                            ),
+                          ],
+                        ),
+                        Gaps.v10,
+                        Text(post.content),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            error: (error, stackTrace) => Center(
+              child: Text(
+                error.toString(),
+              ),
+            ),
           ),
-          ElevatedButton(
-            child: const Text('Show Error SnackBar'),
-            onPressed: () {
-              CustomSnackBar.show(
-                  context, SnackBarType.error, '회원가입에 실패하였습니다.');
-            },
-          ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }
