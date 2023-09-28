@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../common/constants/gaps.dart';
 import '../../common/constants/sizes.dart';
+import '../../common/widgets/custom_snackbar.dart';
 import '../../common/widgets/form_button.dart';
 import 'post_view_model.dart';
 
@@ -58,13 +59,29 @@ class _PostScreenState extends ConsumerState<PostScreen> {
     );
   }
 
-  Future<void> _onSave(context) async {
+  void _onSave(BuildContext context) async {
+    if (_content.isEmpty) {
+      return CustomSnackBar.show(
+          context, SnackBarType.error, '내용을 입력해 주시기 바랍니다.');
+    }
+    if (_selectedMood == null) {
+      return CustomSnackBar.show(
+          context, SnackBarType.error, '감정을 선택해 주시기 바랍니다.');
+    }
     ref.read(postForm.notifier).state = {
       "content": _content,
       "mood": _selectedMood,
     };
     await ref.read(postProvider.notifier).uploadPost(context);
   }
+
+  // Future<void> _onSave(context) async {
+  //   ref.read(postForm.notifier).state = {
+  //     "content": _content,
+  //     "mood": _selectedMood,
+  //   };
+  //   ref.read(postProvider.notifier).uploadPost(context);
+  // }
 
   @override
   Future<void> dispose() async {

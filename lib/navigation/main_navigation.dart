@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mood_tracker/navigation/post/post_screen.dart';
+import 'package:mood_tracker/navigation/test_screen.dart';
 
 import '../common/constants/sizes.dart';
 import '../common/utils/util.dart';
@@ -11,6 +12,7 @@ import 'nav_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   final String tab;
+
   const MainNavigationScreen({
     super.key,
     required this.tab,
@@ -21,10 +23,9 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  final List<String> _tabs = ["home", "post"];
+  final List<String> _tabs = ["home", "post", "test"];
 
-  ///시작 페이지
-  late int _selectedIndex = 0;
+  late int _selectedIndex = _tabs.indexOf(widget.tab);
 
   void _onTap(int index) {
     context.go("/${_tabs[index]}");
@@ -70,10 +71,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             offstage: _selectedIndex != 1,
             child: const PostScreen(),
           ),
-          // Offstage(
-          //   offstage: _selectedIndex != 2,
-          //   child: const HomeScreen(),
-          // ),
+          Offstage(
+            offstage: _selectedIndex != 2,
+            child: const TestScreen(),
+          ),
           // Offstage(
           //   offstage: _selectedIndex != 3,
           //   child: const HomeScreen(),
@@ -118,6 +119,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 onTap: () => _onTap(1),
                 selectedIndex: _selectedIndex,
               ),
+              // NavTab(
+              //   text: "Test",
+              //   isSelected: _selectedIndex == 2,
+              //   icon: FontAwesomeIcons.penToSquare,
+              //   selectedIcon: FontAwesomeIcons.solidPenToSquare,
+              //   onTap: () => _onTap(2),
+              //   selectedIndex: _selectedIndex,
+              // ),
             ],
           ),
         ),

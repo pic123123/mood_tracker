@@ -11,24 +11,29 @@ extension MoodExtension on Mood {
 }
 
 class PostModel {
+  final String uid;
   final String content;
   final Mood mood;
 
   PostModel({
+    required this.uid,
     required this.content,
     required this.mood,
   });
 
   PostModel.empty()
-      : content = "",
+      : uid = "",
+        content = "",
         mood = Mood.happy;
 
   PostModel.fromJson(Map<String, dynamic> json)
-      : content = json["content"],
+      : uid = json["uid"],
+        content = json["content"],
         mood = MoodExtension.fromString(json["mood"]);
 
   Map<String, dynamic> toJson() {
     return {
+      "uid": uid,
       "content": content,
       "mood": mood.name,
     };

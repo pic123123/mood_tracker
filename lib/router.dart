@@ -21,7 +21,7 @@ class Routes {
   static const String tutorialName = 'tutorial';
 
   ///mainnavigation
-  static const String mainNavigationURL = '/:tab(home|post)';
+  static const String mainNavigationURL = '/:tab(home|post|test)';
   static const String mainNavigationName = 'mainNavigation';
 }
 
@@ -40,28 +40,35 @@ final routerProvider = Provider(
         return null;
       },
       routes: [
-        GoRoute(
-          name: Routes.signUpName,
-          path: Routes.signUpURL,
-          builder: (context, state) => const SignUpScreen(),
-        ),
-        GoRoute(
-          name: Routes.loginName,
-          path: Routes.loginURL,
-          builder: (context, state) => const LoginScreen(),
-        ),
-        GoRoute(
-          name: Routes.tutorialName,
-          path: Routes.tutorialURL,
-          builder: (context, state) => const TutorialScreen(),
-        ),
-        GoRoute(
-          path: Routes.mainNavigationURL,
-          name: Routes.mainNavigationName,
-          builder: (context, state) {
-            final tab = state.params["tab"]!;
-            return MainNavigationScreen(tab: tab);
+        ShellRoute(
+          builder: (context, state, child) {
+            return child;
           },
+          routes: [
+            GoRoute(
+              name: Routes.signUpName,
+              path: Routes.signUpURL,
+              builder: (context, state) => const SignUpScreen(),
+            ),
+            GoRoute(
+              name: Routes.loginName,
+              path: Routes.loginURL,
+              builder: (context, state) => const LoginScreen(),
+            ),
+            GoRoute(
+              name: Routes.tutorialName,
+              path: Routes.tutorialURL,
+              builder: (context, state) => const TutorialScreen(),
+            ),
+            GoRoute(
+              path: Routes.mainNavigationURL,
+              name: Routes.mainNavigationName,
+              builder: (context, state) {
+                final tab = state.params["tab"]!;
+                return MainNavigationScreen(tab: tab);
+              },
+            ),
+          ],
         ),
       ],
     );

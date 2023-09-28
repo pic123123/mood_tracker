@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mood_tracker/navigation/post/post_model.dart';
 import 'package:mood_tracker/navigation/post/post_repository.dart';
 import '../../authentication/repos/authentication_repo.dart';
+import '../../common/widgets/custom_snackbar.dart';
+import '../main_navigation.dart';
 
 /// AsyncValue는 데이터의 비동기 로딩 상태를 나타내는 클래스입니다.
 /// AsyncValue.loading(), AsyncValue.data(), AsyncValue.error() 등의 메소드를 사용하여 로딩 중,
@@ -24,19 +26,29 @@ class PostViewModel extends AsyncNotifier<void> {
 
   /// 게시글을 등록합니다.
   Future<void> uploadPost(BuildContext context) async {
-    state = const AsyncValue.loading();
     final form = ref.read(postForm);
     final userUid = ref.read(authRepo).user!.uid;
+    state = const AsyncValue.loading();
     state = await AsyncValue.guard(
-      () async {
-        await _postRepo.uploadPost(
-            PostModel(
-              content: form["content"],
-              mood: form["mood"],
-            ),
-            userUid);
-      },
+      () async => await _postRepo.uploadPost(
+        PostModel(
+          uid: userUid,
+          content: form["content"],
+          mood: form["mood"],
+        ),
+      ),
     );
+    if (state.hasError) {
+      CustomSnackBar.show(context, SnackBarType.error, '글 작성 실패. 에러코드: 9999');
+    } else {
+      //context.go("/home");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainNavigationScreen(tab: 'home'),
+        ),
+      );
+    }
   }
 }
 

@@ -9,14 +9,15 @@ class PostRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   ///Firebase 데이터베이스 내 "posts" 경로에 게시글을 업로드 합니다.
-  Future<void> uploadPost(PostModel post, String uid) async {
-    await _db.collection("posts").doc(uid).set(
+  Future<void> uploadPost(PostModel post) async {
+    await _db.collection("posts").add(
           post.toJson(),
         );
   }
 
   ///Firebase 데이터베이스 내 "posts" 경로에 모든 게시글을 가져옵니다.
   Future<QuerySnapshot<Map<String, dynamic>>> getAllPosts() {
+    //최신순으로 표기하기 위해 내림차순
     final query = _db.collection("posts");
     return query.get();
   }
