@@ -22,6 +22,7 @@ class PostsViewModel extends AsyncNotifier<List<PostModel>> {
     final result = await _postRepo.getAllPosts();
     final posts = result.docs.map(
       (doc) => PostModel.fromJson(
+        doc.id,
         doc.data(),
       ),
     );

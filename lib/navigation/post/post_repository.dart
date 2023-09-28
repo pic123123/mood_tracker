@@ -15,6 +15,11 @@ class PostRepository {
         );
   }
 
+  ///Firebase 데이터베이스 내 "posts" 경로에 게시글을 삭제합니다.
+  Future<void> deletePost(String id) async {
+    await _db.collection("posts").doc(id).delete();
+  }
+
   ///Firebase 데이터베이스 내 "posts" 경로에 모든 게시글을 가져옵니다.
   Future<QuerySnapshot<Map<String, dynamic>>> getAllPosts() {
     //최신순으로 표기하기 위해 내림차순
