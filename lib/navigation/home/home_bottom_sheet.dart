@@ -18,7 +18,7 @@ class HomeBottomSheet extends ConsumerStatefulWidget {
 
 class _HomeBottomSheetState extends ConsumerState<HomeBottomSheet> {
   ///게시글 삭제
-  void _onDelete(BuildContext context) async {
+  void _onDelete() async {
     ref.read(postProvider.notifier).deletePost(context, widget.postId);
   }
 
@@ -52,7 +52,7 @@ class _HomeBottomSheetState extends ConsumerState<HomeBottomSheet> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onTap: () => _onDelete(context),
+                onTap: _onDelete,
               ),
               const Divider(color: Colors.black26, thickness: 1),
               ListTile(

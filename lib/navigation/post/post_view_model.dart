@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mood_tracker/navigation/post/post_model.dart';
 import 'package:mood_tracker/navigation/post/post_repository.dart';
 import '../../authentication/repos/authentication_repo.dart';
@@ -26,15 +25,16 @@ class PostViewModel extends AsyncNotifier<void> {
   }
 
   /// 게시글을 삭제합니다.
-  Future<void> deletePost(context, postId) async {
+  Future<void> deletePost(BuildContext context, postId) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(
       () async => await _postRepo.deletePost(postId),
     );
     if (state.hasError) {
-      CustomSnackBar.show(context, SnackBarType.error, '글 작성 실패. 에러코드: 9999');
+      CustomSnackBar.show(context, SnackBarType.error, '글 삭제 실패. 에러코드: 9999');
     } else {
       CustomSnackBar.show(context, SnackBarType.success, '글 삭제 성공');
+      context.go('/home');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -60,14 +60,17 @@ class PostViewModel extends AsyncNotifier<void> {
     );
     if (state.hasError) {
       CustomSnackBar.show(context, SnackBarType.error, '글 작성 실패. 에러코드: 9999');
+      // } else {
+      //   context.go("/home");
     } else {
-      context.go("/home");
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const MainNavigationScreen(tab: 'home'),
-      //   ),
-      // );
+      CustomSnackBar.show(context, SnackBarType.success, '글 작성 성공');
+      context.go('/home');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainNavigationScreen(tab: 'home'),
+        ),
+      );
     }
   }
 }

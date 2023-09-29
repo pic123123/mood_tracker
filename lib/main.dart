@@ -65,18 +65,18 @@ class NomadFlutterFinalProjectMoodTracker extends ConsumerWidget {
         useMaterial3: false,
         textTheme: Typography.blackMountainView,
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.deepOrange[300],
+        scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
         ),
         splashColor: Colors.transparent,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           foregroundColor: Colors.black,
-          backgroundColor: Colors.deepOrange[300],
-          surfaceTintColor: Colors.deepOrange[300],
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
           elevation: 0,
-          titleTextStyle: const TextStyle(
+          titleTextStyle: TextStyle(
             color: Colors.black,
             fontSize: Sizes.size16 + Sizes.size2,
             fontWeight: FontWeight.w600,

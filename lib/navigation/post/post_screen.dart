@@ -59,7 +59,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
     );
   }
 
-  void _onSave(BuildContext context) async {
+  void _onSave() async {
     if (_content.isEmpty) {
       return CustomSnackBar.show(
           context, SnackBarType.error, '내용을 입력해 주시기 바랍니다.');
@@ -195,7 +195,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => _onSave(context),
+                  onTap: _onSave,
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width *
                         0.7, // 화면 너비의 약 70%만큼 설정
